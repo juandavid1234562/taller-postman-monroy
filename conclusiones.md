@@ -30,3 +30,20 @@ Los tres POST idénticos también devolvieron el mismo id (101), pero eso se deb
 parece exitoso pero el contenido no lo es. Al verificar Content-Type
 detecto ese caso, y mis pruebas que leen JSON no fallan por razones confusas.
 
+## Preguntas finales
+
+¿Qué le faltaría a mi tabla para ser un plan de pruebas formal?
+Mi tabla ya es un conjunto de casos de prueba: cada fila tiene una
+entrada, un resultado esperado y uno obtenido. Para ser un plan formal le
+faltaría: un identificador y un objetivo por caso, las precondiciones,
+los datos de entrada detallados, los criterios de aprobación, el alcance
+(qué se prueba y qué no), el entorno y las herramientas, la priorización
+según el riesgo, el responsable y el cronograma.
+
+¿Por qué un 404 puede ser buena noticia y un 200 puede ser un defecto?
+Porque un caso pasa o falla según si el resultado coincide con lo
+esperado, no según el código. Si pido un recurso que no existe y la API
+responde 404, se comporta como debe: el caso pasó. En cambio, un 200 puede
+ser un defecto si no corresponde, por ejemplo devolver 200 con cuerpo
+vacío para un recurso inexistente, porque le dice al cliente que todo
+salió bien y puede seguir trabajando con datos que no existen.

@@ -90,3 +90,39 @@ relación "una publicación tiene muchos comentarios". Probé /posts/1/comments
 siguiendo el patrón `/recurso/id/subrecurso` y devolvió solo los
 comentarios cuyo `postId` es 1. Los recursos hijos se acceden así, anidados
 bajo el padre.
+
+## Tarea 12: primera prueba automática
+
+Con `200` la prueba pasó (verde) y con `201` falló (rojo), porque la API
+sigue respondiendo 200.
+
+¿Por qué es importante ver fallar una prueba?
+ Porque una prueba que nunca he visto fallar no me demuestra nada: podría estar mal escrita o no
+verificar lo que creo, y dar verde siempre (un falso positivo). Verla
+en rojo con un valor incorrecto confirma que sí es capaz de detectar un
+error, y por eso puedo confiar en ella cuando salga verde.
+
+## Tarea 13: pruebas propias
+
+| Prueba                            | Petición    | Qué verifica |
+| El estado es 200                 | GET /posts/1 | Que la API responda con éxito |
+| Tiene el campo title             | GET /posts/1 | Que el recurso incluya el campo esperado |
+| Responde en menos de 1000 ms     | GET /posts/1 | Que el tiempo de respuesta sea aceptable |
+| El id es un número               | GET /posts/1 | Que el campo `id` tenga el tipo de dato correcto |
+| La colección tiene 100 elementos | GET /posts   | Que la lista traiga la cantidad esperada |
+
+pm.test("La respuesta tiene el campo title", function () {
+    pm.expect(pm.response.json()).to.have.property("title");
+});
+
+pm.test("Responde en menos de 1000 ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(1000);
+});
+
+pm.test("El id es un numero", function () {
+    pm.expect(pm.response.json().id).to.be.a("number");
+});
+
+pm.test("La colección tiene 100 elementos", function () {
+    pm.expect(pm.response.json()).to.have.lengthOf(100);
+});
