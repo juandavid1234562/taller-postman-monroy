@@ -64,3 +64,29 @@ todos los campos.
  si olvido alguno, lo borraría sin darme cuenta, que es
 justo el daño grave que se produce en la práctica cuando se usa PUT
 pensando que actúa como PATCH.
+
+## Tarea 10: valor límite
+
+- Id más alto que devuelve 200: 100
+- Primer id que devuelve 404: 101
+
+Eso significa que hay 100 publicaciones. Este tipo de caso se llama
+análisis de valor límite. Los defectos se concentran ahí porque es
+donde los programadores suelen equivocarse por uno: usar `<` en lugar de
+`<=`, o empezar a contar desde 0 en lugar de 1. Un sistema puede
+funcionar bien con 50 y fallar justo en el borde, así que probar el
+último válido y el primer inválido es más eficaz que probar valores del medio.
+
+## Tarea 11: otros recursos
+
+| URL               | Código | Elementos | Campos principales |
+| /users            | 200    | 10        | id, name, username, email, address, phone, website, company |
+| /comments         | 200    | 500       | postId, id, name, email, body |
+| /posts/1/comments | 200    | 5         | postId, id, name, email, body |
+
+Cómo deduje la estructura: en /comments cada elemento trae un campo
+`postId`, que apunta a la publicación a la que pertenece. Eso sugiere una
+relación "una publicación tiene muchos comentarios". Probé /posts/1/comments
+siguiendo el patrón `/recurso/id/subrecurso` y devolvió solo los
+comentarios cuyo `postId` es 1. Los recursos hijos se acceden así, anidados
+bajo el padre.
